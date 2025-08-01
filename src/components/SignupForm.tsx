@@ -24,15 +24,18 @@ const SignupForm = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    console.log("Component mounted, checking for SpotDraft SDK...");
+    
     // Check if SDK is already loaded
     if (window.SdClickthrough) {
+      console.log("SDK already available, initializing...");
       initializeClickthrough();
       return;
     }
 
     // Listen for SDK load event
     const handleSDKLoaded = () => {
-      console.log("SpotDraft SDK loaded");
+      console.log("sdClickthroughLoaded event fired");
       setSdkLoaded(true);
       initializeClickthrough();
     };
@@ -41,43 +44,51 @@ const SignupForm = () => {
     window.addEventListener("sdClickthroughLoaded", handleSDKLoaded);
 
     // Fallback: check periodically if SDK is loaded
+    let attempts = 0;
     const checkSDK = setInterval(() => {
+      attempts++;
+      console.log(`Checking for SDK, attempt ${attempts}`);
+      
       if (window.SdClickthrough && !sdClickthrough) {
         console.log("SpotDraft SDK detected via polling");
         clearInterval(checkSDK);
         setSdkLoaded(true);
         initializeClickthrough();
+      } else if (attempts >= 15) {
+        console.warn("SpotDraft SDK failed to load after 15 attempts");
+        clearInterval(checkSDK);
+        // Show error state
+        setSdkLoaded(false);
       }
     }, 1000);
-
-    // Cleanup after 10 seconds
-    const timeout = setTimeout(() => {
-      clearInterval(checkSDK);
-      if (!sdClickthrough) {
-        console.warn("SpotDraft SDK failed to load within 10 seconds");
-      }
-    }, 10000);
 
     return () => {
       window.removeEventListener("sdClickthroughLoaded", handleSDKLoaded);
       clearInterval(checkSDK);
-      clearTimeout(timeout);
     };
   }, []);
 
   const initializeClickthrough = () => {
     try {
-      console.log("Initializing Clickthrough...");
+      console.log("Creating SdClickthrough instance with config:", {
+        clickwrapId: "79c580c0-5782-4373-9556-d4612fc84a1b",
+        hostLocationDomId: "clickthrough-host",
+        baseUrl: "https://api.in.spotdraft.com/"
+      });
+      
       const clickthrough = new window.SdClickthrough({
         clickwrapId: "79c580c0-5782-4373-9556-d4612fc84a1b",
         hostLocationDomId: "clickthrough-host",
         baseUrl: "https://api.in.spotdraft.com/"
       });
+      
+      console.log("Calling clickthrough.init()...");
       clickthrough.init();
       setSdClickthrough(clickthrough);
       console.log("Clickthrough initialized successfully");
     } catch (error) {
       console.error("Error initializing Clickthrough:", error);
+      setSdkLoaded(false);
     }
   };
 
@@ -221,8 +232,19 @@ const SignupForm = () => {
             <div className="py-4">
               <div id="clickthrough-host" className="text-sm text-muted-foreground text-center min-h-[40px]">
                 {!sdClickthrough && (
-                  <div className="text-xs text-muted-foreground">
-                    {sdkLoaded ? "Loading terms..." : "By clicking 'Sign up' you agree to Careem's Terms of Service and acknowledge that you have read the Privacy Policy"}
+                  <div className="flex items-start gap-2 text-left">
+                    <input 
+                      type="checkbox" 
+                      id="terms-checkbox" 
+                      required 
+                      className="mt-1 h-4 w-4 text-primary focus:ring-primary border-border rounded"
+                    />
+                    <label htmlFor="terms-checkbox" className="text-xs text-muted-foreground">
+                      By clicking "Sign up" you agree to Careem's{" "}
+                      <a href="#" className="text-primary hover:underline">Terms of Service</a>{" "}
+                      and acknowledge that you have read the{" "}
+                      <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+                    </label>
                   </div>
                 )}
               </div>
