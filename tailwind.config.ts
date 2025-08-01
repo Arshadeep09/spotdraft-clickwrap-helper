@@ -64,15 +64,31 @@ export default {
 				}
 			},
 			backgroundImage: {
-				'gradient-subtle': 'var(--gradient-subtle)',
+				'gradient-careem': 'var(--gradient-careem)',
 				'gradient-card': 'var(--gradient-card)',
+				'gradient-shape-1': 'var(--gradient-shape-1)',
+				'gradient-shape-2': 'var(--gradient-shape-2)',
+				'gradient-shape-3': 'var(--gradient-shape-3)',
+				'gradient-shape-4': 'var(--gradient-shape-4)',
 			},
 			boxShadow: {
 				'elegant': 'var(--shadow-elegant)',
 				'soft': 'var(--shadow-soft)',
+				'careem': 'var(--shadow-careem)',
 			},
 			transitionTimingFunction: {
 				'smooth': 'var(--transition-smooth)',
+			},
+			animation: {
+				'float': 'float 6s ease-in-out infinite',
+				'float-delayed': 'float 6s ease-in-out infinite 2s',
+				'float-slow': 'float 8s ease-in-out infinite 1s',
+			},
+			keyframes: {
+				float: {
+					'0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+					'50%': { transform: 'translateY(-20px) rotate(5deg)' },
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

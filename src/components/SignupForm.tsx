@@ -152,15 +152,33 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-careem relative overflow-hidden">
+      {/* Floating geometric shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Large shapes */}
+        <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-shape-1 rounded-3xl opacity-80 animate-float"></div>
+        <div className="absolute top-32 right-16 w-48 h-48 bg-gradient-shape-2 rounded-2xl opacity-70 animate-float-delayed"></div>
+        <div className="absolute bottom-20 left-32 w-56 h-56 bg-gradient-shape-3 rounded-3xl opacity-75 animate-float-slow"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-shape-4 rounded-2xl opacity-80 animate-float"></div>
+        
+        {/* Medium shapes */}
+        <div className="absolute top-64 left-1/2 w-32 h-32 bg-gradient-shape-2 rounded-xl opacity-60 animate-float-delayed"></div>
+        <div className="absolute top-20 right-1/3 w-24 h-24 bg-gradient-shape-3 rounded-lg opacity-70 animate-float-slow"></div>
+        <div className="absolute bottom-40 left-20 w-28 h-28 bg-gradient-shape-1 rounded-xl opacity-65 animate-float"></div>
+        
+        {/* Small shapes */}
+        <div className="absolute top-48 left-2/3 w-16 h-16 bg-gradient-shape-4 rounded-lg opacity-50 animate-float-slow"></div>
+        <div className="absolute bottom-64 right-1/4 w-20 h-20 bg-gradient-shape-2 rounded-lg opacity-60 animate-float-delayed"></div>
+      </div>
+
       {/* Header */}
-      <div className="absolute top-4 right-4 flex items-center gap-4">
-        <div className="flex items-center gap-2 text-muted-foreground">
+      <div className="absolute top-4 right-4 flex items-center gap-4 z-20">
+        <div className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
           <HelpCircle className="h-4 w-4" />
           <span className="text-sm">Help Center</span>
         </div>
         <Select defaultValue="english">
-          <SelectTrigger className="w-32 border-none bg-transparent">
+          <SelectTrigger className="w-32 border-none bg-white/10 backdrop-blur-sm text-white">
             <div className="flex items-center gap-2">
               <Globe className="h-4 w-4" />
               <SelectValue />
@@ -174,100 +192,109 @@ const SignupForm = () => {
         </Select>
       </div>
 
-      {/* Main Form */}
-      <Card className="w-full max-w-md bg-gradient-card shadow-elegant border-0">
-        <CardHeader className="text-center pb-6">
-          <CardTitle className="text-2xl font-semibold text-foreground">
-            Sign up with Careem
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="fullName" className="text-sm font-medium">
-                Full Name
-              </Label>
-              <Input
-                id="fullName"
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className="h-12 bg-background border-border focus:ring-2 focus:ring-primary/20 transition-all"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-background border-border focus:ring-2 focus:ring-primary/20 transition-all"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium">
-                Password
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-12 bg-background border-border focus:ring-2 focus:ring-primary/20 transition-all"
-                required
-              />
-              <p className="text-xs text-muted-foreground">
-                Your password must contain a minimum of 6 characters
-              </p>
-            </div>
-
-            {/* Clickthrough Terms Container */}
-            <div className="py-4">
-              <div id="clickthrough-host" className="text-sm text-muted-foreground text-center min-h-[40px]">
-                {!sdClickthrough && (
-                  <div className="flex items-start gap-2 text-left">
-                    <input 
-                      type="checkbox" 
-                      id="terms-checkbox" 
-                      required 
-                      className="mt-1 h-4 w-4 text-primary focus:ring-primary border-border rounded"
-                    />
-                    <label htmlFor="terms-checkbox" className="text-xs text-muted-foreground">
-                      By clicking "Sign up" you agree to Careem's{" "}
-                      <a href="#" className="text-primary hover:underline">Terms of Service</a>{" "}
-                      and acknowledge that you have read the{" "}
-                      <a href="#" className="text-primary hover:underline">Privacy Policy</a>
-                    </label>
-                  </div>
-                )}
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div className="w-full max-w-md">
+          {/* Main Form */}
+          <Card className="bg-gradient-card backdrop-blur-sm shadow-careem border-0 relative">
+            <CardHeader className="text-center pb-6">
+              <div className="flex justify-center mb-4">
+                <div className="text-3xl font-bold text-primary">
+                  Careem
+                </div>
               </div>
-            </div>
+              <CardTitle className="text-2xl font-semibold text-foreground">
+                Sign up with Careem
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="fullName" className="text-sm font-medium">
+                    Full Name
+                  </Label>
+                  <Input
+                    id="fullName"
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="h-12 bg-background border-border focus:ring-2 focus:ring-primary/20 transition-all"
+                    required
+                  />
+                </div>
 
-            <Button
-              type="submit"
-              className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-soft transition-all duration-300 hover:shadow-elegant"
-              disabled={isLoading}
-            >
-              {isLoading ? "Creating Account..." : "Sign up"}
-            </Button>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-sm font-medium">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-12 bg-background border-border focus:ring-2 focus:ring-primary/20 transition-all"
+                    required
+                  />
+                </div>
 
-            <p className="text-xs text-muted-foreground text-center pt-4">
-              By registering you agree to our Terms & Conditions
-            </p>
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-sm font-medium">
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="h-12 bg-background border-border focus:ring-2 focus:ring-primary/20 transition-all"
+                    required
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Your password must contain a minimum of 6 characters
+                  </p>
+                </div>
 
-            <p className="text-xs text-muted-foreground text-center">
-              This page is protected by reCAPTCHA and is subject to the Google Privacy Policy and Terms of Service
-            </p>
-          </form>
-        </CardContent>
-      </Card>
+                {/* Clickthrough Terms Container - Fixed spacing */}
+                <div className="pt-2 pb-4">
+                  <div id="clickthrough-host" className="text-sm text-muted-foreground text-center min-h-[40px]">
+                    {!sdClickthrough && (
+                      <div className="flex items-start gap-3 text-left">
+                        <input 
+                          type="checkbox" 
+                          id="terms-checkbox" 
+                          required 
+                          className="mt-1 h-4 w-4 text-primary focus:ring-primary border-border rounded flex-shrink-0"
+                        />
+                        <label htmlFor="terms-checkbox" className="text-xs text-muted-foreground leading-relaxed">
+                          By clicking "Sign up" you agree to Careem's{" "}
+                          <a href="#" className="text-primary hover:underline font-medium">Terms of Service</a>{" "}
+                          and acknowledge that you have read the{" "}
+                          <a href="#" className="text-primary hover:underline font-medium">Privacy Policy</a>
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-soft transition-all duration-300 hover:shadow-careem hover:scale-[1.02]"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Creating Account..." : "Sign up"}
+                </Button>
+
+                <p className="text-xs text-muted-foreground text-center pt-4">
+                  By registering you agree to our Terms & Conditions
+                </p>
+
+                <p className="text-xs text-muted-foreground text-center">
+                  This page is protected by reCAPTCHA and is subject to the Google Privacy Policy and Terms of Service
+                </p>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };

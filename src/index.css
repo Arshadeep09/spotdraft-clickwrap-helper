@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Clean, modern color palette inspired by Careem */
+    /* Careem-inspired vibrant color palette */
     --background: 240 20% 98%;
     --foreground: 240 10% 15%;
 
@@ -18,8 +18,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 15%;
 
-    /* Elegant primary colors */
-    --primary: 240 10% 15%;
+    /* Careem brand colors */
+    --primary: 167 85% 35%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 4% 92%;
@@ -28,23 +28,30 @@ All colors MUST be HSL.
     --muted: 240 4% 95%;
     --muted-foreground: 240 3% 50%;
 
-    --accent: 240 4% 92%;
-    --accent-foreground: 240 10% 15%;
+    --accent: 167 85% 35%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 240 4% 88%;
     --input: 240 4% 88%;
-    --ring: 240 10% 15%;
+    --ring: 167 85% 35%;
 
-    /* Beautiful gradients */
-    --gradient-subtle: linear-gradient(135deg, hsl(240 20% 98%), hsl(240 10% 96%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(240 10% 98%));
+    /* Careem vibrant gradients */
+    --gradient-careem: linear-gradient(135deg, #00c2a8 0%, #6b46c1 25%, #3b82f6 50%, #8b5cf6 75%, #00c2a8 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.95), hsl(240 10% 98% / 0.9));
     
-    /* Elegant shadows */
-    --shadow-elegant: 0 8px 32px -8px hsl(240 10% 15% / 0.12);
+    /* Dynamic shapes gradients */
+    --gradient-shape-1: linear-gradient(135deg, #6b46c1, #3b82f6);
+    --gradient-shape-2: linear-gradient(135deg, #8b5cf6, #06b6d4);
+    --gradient-shape-3: linear-gradient(135deg, #00c2a8, #10b981);
+    --gradient-shape-4: linear-gradient(135deg, #3b82f6, #6366f1);
+    
+    /* Elegant shadows with color */
+    --shadow-elegant: 0 8px 32px -8px hsl(167 85% 35% / 0.15);
     --shadow-soft: 0 4px 16px -4px hsl(240 10% 15% / 0.08);
+    --shadow-careem: 0 20px 60px -12px hsl(167 85% 35% / 0.25);
     
     /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
