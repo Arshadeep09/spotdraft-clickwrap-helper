@@ -71,13 +71,13 @@ const SignupForm = () => {
   const initializeClickthrough = () => {
     try {
       console.log("Creating SdClickthrough instance with config:", {
-        clickwrapId: "79c580c0-5782-4373-9556-d4612fc84a1b",
+        clickwrapId: "c6deb09d-a5d2-4214-84a8-e6b3ea1c5356",
         hostLocationDomId: "clickthrough-host",
         baseUrl: "https://api.in.spotdraft.com/"
       });
       
       const clickthrough = new window.SdClickthrough({
-        clickwrapId: "79c580c0-5782-4373-9556-d4612fc84a1b",
+        clickwrapId: "c6deb09d-a5d2-4214-84a8-e6b3ea1c5356",
         hostLocationDomId: "clickthrough-host",
         baseUrl: "https://api.in.spotdraft.com/"
       });
@@ -256,7 +256,7 @@ const SignupForm = () => {
                 {/* Clickthrough Terms Container - Fixed spacing */}
                 <div className="pt-2 pb-4">
                   <div id="clickthrough-host" className="text-sm text-muted-foreground text-center min-h-[40px]">
-                    {!sdClickthrough && (
+                    {!sdClickthrough && !sdkLoaded && (
                       <div className="flex items-start gap-3 text-left">
                         <input 
                           type="checkbox" 
@@ -284,10 +284,6 @@ const SignupForm = () => {
                 </Button>
 
                 <p className="text-xs text-muted-foreground text-center pt-4">
-                  By registering you agree to our Terms & Conditions
-                </p>
-
-                <p className="text-xs text-muted-foreground text-center">
                   This page is protected by reCAPTCHA and is subject to the Google Privacy Policy and Terms of Service
                 </p>
               </form>
