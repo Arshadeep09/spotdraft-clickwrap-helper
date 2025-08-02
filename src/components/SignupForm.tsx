@@ -262,8 +262,9 @@ const SignupForm = () => {
                 {/* Clickthrough Terms Container - Fixed spacing */}
                 <div className="pt-2 pb-4">
                   <div id="clickthrough-host" className="text-sm text-muted-foreground text-center min-h-[40px]">
-                    {!sdClickthrough && !sdkLoaded && (
-                      <div className="flex items-start gap-3 text-left">
+                    {/* Only show fallback if SDK failed to load completely OR if clickthrough failed to initialize */}
+                    {(!sdkLoaded || (!sdClickthrough && sdkLoaded)) && (
+                      <div className="flex items-start gap-4 text-left">
                         <input 
                           type="checkbox" 
                           id="terms-checkbox" 
