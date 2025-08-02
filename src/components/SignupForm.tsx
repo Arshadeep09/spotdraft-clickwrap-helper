@@ -73,13 +73,13 @@ const SignupForm = () => {
       console.log("Creating SdClickthrough instance with config:", {
         clickwrapId: "c6deb09d-a5d2-4214-84a8-e6b3ea1c5356",
         hostLocationDomId: "clickthrough-host",
-        baseUrl: "https://api.in.spotdraft.com/"
+        baseUrl: "https://api.me.spotdraft.com/"
       });
       
       const clickthrough = new window.SdClickthrough({
         clickwrapId: "c6deb09d-a5d2-4214-84a8-e6b3ea1c5356",
         hostLocationDomId: "clickthrough-host",
-        baseUrl: "https://api.in.spotdraft.com/"
+        baseUrl: "https://api.me.spotdraft.com/"
       });
       
       console.log("Calling clickthrough.init()...");
