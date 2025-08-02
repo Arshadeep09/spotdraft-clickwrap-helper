@@ -91,10 +91,10 @@ const SignupForm = () => {
       console.log("Clickthrough initialized successfully");
     } catch (error) {
       console.error("Error initializing Clickthrough:", error);
-      console.log("SpotDraft API failed - using fallback checkbox");
-      // Reset both states to show fallback
+      console.log("SpotDraft API failed - keeping SDK loaded but clickthrough failed");
+      // Don't reset sdkLoaded - let SpotDraft handle its own checkbox
+      // Just keep sdClickthrough as null
       setSdClickthrough(null);
-      setSdkLoaded(false);
     }
   };
 
@@ -262,8 +262,8 @@ const SignupForm = () => {
                 {/* Clickthrough Terms Container - Fixed spacing */}
                 <div className="pt-2 pb-4">
                   <div id="clickthrough-host" className="text-sm text-muted-foreground text-center min-h-[40px]">
-                    {/* Only show fallback if SDK failed to load completely OR if clickthrough failed to initialize */}
-                    {(!sdkLoaded || (!sdClickthrough && sdkLoaded)) && (
+                    {/* Only show fallback if SDK completely failed to load */}
+                    {!sdkLoaded && (
                       <div className="flex items-start gap-4 text-left">
                         <input 
                           type="checkbox" 
