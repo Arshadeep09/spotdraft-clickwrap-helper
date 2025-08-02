@@ -68,7 +68,7 @@ const SignupForm = () => {
     };
   }, []);
 
-  const initializeClickthrough = () => {
+  const initializeClickthrough = async () => {
     try {
       console.log("Creating SdClickthrough instance with config:", {
         clickwrapId: "c6deb09d-a5d2-4214-84a8-e6b3ea1c5356",
@@ -83,11 +83,17 @@ const SignupForm = () => {
       });
       
       console.log("Calling clickthrough.init()...");
-      clickthrough.init();
+      
+      // Wait for init to complete and handle the promise
+      await clickthrough.init();
+      
       setSdClickthrough(clickthrough);
       console.log("Clickthrough initialized successfully");
     } catch (error) {
       console.error("Error initializing Clickthrough:", error);
+      console.log("SpotDraft API failed - using fallback checkbox");
+      // Reset both states to show fallback
+      setSdClickthrough(null);
       setSdkLoaded(false);
     }
   };
