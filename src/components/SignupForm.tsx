@@ -69,7 +69,19 @@ const SignupForm = () => {
   }, []);
 
   const initializeClickthrough = async () => {
+    // Prevent multiple initializations
+    if (sdClickthrough) {
+      console.log("Clickthrough already initialized, skipping...");
+      return;
+    }
+
     try {
+      // Clear the container first to prevent duplicates
+      const container = document.getElementById("clickthrough-host");
+      if (container) {
+        container.innerHTML = "";
+      }
+
       console.log("Creating SdClickthrough instance with config:", {
         clickwrapId: "c6deb09d-a5d2-4214-84a8-e6b3ea1c5356",
         hostLocationDomId: "clickthrough-host",
@@ -92,8 +104,6 @@ const SignupForm = () => {
     } catch (error) {
       console.error("Error initializing Clickthrough:", error);
       console.log("SpotDraft API failed - keeping SDK loaded but clickthrough failed");
-      // Don't reset sdkLoaded - let SpotDraft handle its own checkbox
-      // Just keep sdClickthrough as null
       setSdClickthrough(null);
     }
   };
