@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HelpCircle, Globe } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 // Declare global types for SpotDraft SDK
 declare global {
@@ -23,6 +24,7 @@ const SignupForm = () => {
   const [sdClickthrough, setSdClickthrough] = useState<any>(null);
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Component mounted, checking for SpotDraft SDK...");
@@ -182,10 +184,8 @@ const SignupForm = () => {
           description: "Welcome to Careem. Your account has been created and terms accepted.",
         });
 
-        // Reset form
-        setFullName("");
-        setPassword("");
-        setEmail("");
+        // Navigate to confirmation page
+        navigate('/confirmation');
       } else {
         throw new Error("Clickthrough not initialized");
       }
