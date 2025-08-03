@@ -26,6 +26,12 @@ const SignupForm = () => {
   useEffect(() => {
     console.log("Component mounted, checking for SpotDraft SDK...");
     
+    // Clear any existing content in the container first
+    const container = document.getElementById("clickthrough-host");
+    if (container) {
+      container.innerHTML = "";
+    }
+    
     // Check if SDK is already loaded
     if (window.SdClickthrough) {
       console.log("SDK already available, initializing...");
