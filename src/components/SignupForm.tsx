@@ -29,6 +29,32 @@ const SignupForm = () => {
   useEffect(() => {
     console.log("Component mounted, checking for SpotDraft SDK...");
     
+    // Add custom styles for the SpotDraft SDK content
+    const styleElement = document.createElement('style');
+    styleElement.id = 'clickthrough-styles';
+    styleElement.textContent = `
+      #clickthrough-host a {
+        color: hsl(var(--primary)) !important;
+        text-decoration: underline !important;
+        text-underline-offset: 2px !important;
+        transition: all 0.2s ease !important;
+      }
+      #clickthrough-host a:hover {
+        color: hsl(var(--primary) / 0.8) !important;
+        text-decoration-thickness: 2px !important;
+      }
+      #clickthrough-host input[type="checkbox"] {
+        margin-right: 12px !important;
+      }
+    `;
+    
+    // Remove existing styles and add new ones
+    const existingStyle = document.getElementById('clickthrough-styles');
+    if (existingStyle) {
+      existingStyle.remove();
+    }
+    document.head.appendChild(styleElement);
+    
     // Prevent multiple initializations with a flag on the window object
     if (window.clickthroughInitialized) {
       console.log("Clickthrough already initialized globally, skipping...");
