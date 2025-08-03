@@ -259,26 +259,10 @@ const SignupForm = () => {
                   </p>
                 </div>
 
-                {/* Clickthrough Terms Container - Fixed spacing */}
+                {/* Clickthrough Terms Container - Only SpotDraft SDK checkbox */}
                 <div className="pt-2 pb-4">
                   <div id="clickthrough-host" className="text-sm text-muted-foreground text-center min-h-[40px]">
-                    {/* Only show fallback if SDK completely failed to load */}
-                    {!sdkLoaded && (
-                      <div className="flex items-start gap-4 text-left">
-                        <input 
-                          type="checkbox" 
-                          id="terms-checkbox" 
-                          required 
-                          className="mt-1 h-4 w-4 text-primary focus:ring-primary border-border rounded flex-shrink-0"
-                        />
-                        <label htmlFor="terms-checkbox" className="text-xs text-muted-foreground leading-relaxed">
-                          By clicking "Sign up" you agree to Careem's{" "}
-                          <a href="#" className="text-primary hover:underline font-medium">Terms of Service</a>{" "}
-                          and acknowledge that you have read the{" "}
-                          <a href="#" className="text-primary hover:underline font-medium">Privacy Policy</a>
-                        </label>
-                      </div>
-                    )}
+                    {/* SpotDraft SDK will populate this container with its checkbox */}
                   </div>
                 </div>
 
