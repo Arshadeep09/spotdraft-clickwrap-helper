@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 declare global {
   interface Window {
     SdClickthrough: any;
+    clickthroughInitialized: boolean;
   }
 }
 
@@ -25,6 +26,12 @@ const SignupForm = () => {
 
   useEffect(() => {
     console.log("Component mounted, checking for SpotDraft SDK...");
+    
+    // Prevent multiple initializations with a flag on the window object
+    if (window.clickthroughInitialized) {
+      console.log("Clickthrough already initialized globally, skipping...");
+      return;
+    }
     
     // Clear any existing content in the container first
     const container = document.getElementById("clickthrough-host");
@@ -55,7 +62,7 @@ const SignupForm = () => {
       attempts++;
       console.log(`Checking for SDK, attempt ${attempts}`);
       
-      if (window.SdClickthrough && !sdClickthrough) {
+      if (window.SdClickthrough && !window.clickthroughInitialized) {
         console.log("SpotDraft SDK detected via polling");
         clearInterval(checkSDK);
         setSdkLoaded(true);
@@ -63,7 +70,6 @@ const SignupForm = () => {
       } else if (attempts >= 15) {
         console.warn("SpotDraft SDK failed to load after 15 attempts");
         clearInterval(checkSDK);
-        // Show error state
         setSdkLoaded(false);
       }
     }, 1000);
@@ -71,15 +77,35 @@ const SignupForm = () => {
     return () => {
       window.removeEventListener("sdClickthroughLoaded", handleSDKLoaded);
       clearInterval(checkSDK);
+      // Clean up the SDK instance and container on unmount
+      if (sdClickthrough) {
+        try {
+          // Try to destroy the instance if the SDK has a destroy method
+          if (typeof sdClickthrough.destroy === 'function') {
+            sdClickthrough.destroy();
+          }
+        } catch (error) {
+          console.log("Error destroying clickthrough instance:", error);
+        }
+      }
+      const container = document.getElementById("clickthrough-host");
+      if (container) {
+        container.innerHTML = "";
+      }
+      // Reset the global flag
+      window.clickthroughInitialized = false;
     };
   }, []);
 
   const initializeClickthrough = async () => {
-    // Prevent multiple initializations
-    if (sdClickthrough) {
+    // Prevent multiple initializations using both component state and global flag
+    if (sdClickthrough || window.clickthroughInitialized) {
       console.log("Clickthrough already initialized, skipping...");
       return;
     }
+
+    // Set global flag immediately to prevent concurrent initializations
+    window.clickthroughInitialized = true;
 
     try {
       // Clear the container first to prevent duplicates
@@ -111,6 +137,8 @@ const SignupForm = () => {
       console.error("Error initializing Clickthrough:", error);
       console.log("SpotDraft API failed - keeping SDK loaded but clickthrough failed");
       setSdClickthrough(null);
+      // Reset flag on error so it can be retried
+      window.clickthroughInitialized = false;
     }
   };
 
